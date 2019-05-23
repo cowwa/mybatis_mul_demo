@@ -1,2 +1,4 @@
-# mybatis_mul_demo
-springboot 动态加载多数据源
+## 1、基于Springboot + mybatis 多数据源处理方式，可以动态增加数据源，而不需要重启应用
+## 2、自动创建数据库及相应的表;
+## 3、通过swagger进行系统测试
+
