@@ -44,6 +44,26 @@ public class DataSourceConfig  {
 
     private static Map<Object, Object> targetDataSources = new HashMap<>();
     /**
+     * 注册动态数据源
+     *
+     * @return
+     */
+    @Bean("dynamicDataSource")
+    public DynamicDataSource dynamicDataSource() throws Exception{
+        initDataSource();
+        initDynamicDataSource();
+        DynamicDataSource dynamicDataSource = new DynamicDataSource();
+        // 设置默认数据源
+        dynamicDataSource.setDefaultTargetDataSource(defaultDataSource);
+        targetDataSources.put("defaultDataSource", defaultDataSource);
+        targetDataSources.putAll(dynamicDataSources);
+        //设置目标数据库
+        dynamicDataSource.setTargetDataSources(targetDataSources);
+        logger.info("注册数据源成功");
+        return dynamicDataSource;
+    }
+
+    /**
      * 初始化默认数据源
      * @return
      */
@@ -98,26 +118,6 @@ public class DataSourceConfig  {
         }
     }
 
-
-    /**
-     * 注册动态数据源
-     *
-     * @return
-     */
-    @Bean("dynamicDataSource")
-    public DynamicDataSource dynamicDataSource() throws Exception{
-        initDataSource();
-        initDynamicDataSource();
-        DynamicDataSource dynamicDataSource = new DynamicDataSource();
-        // 设置默认数据源
-        dynamicDataSource.setDefaultTargetDataSource(defaultDataSource);
-        targetDataSources.put("defaultDataSource", defaultDataSource);
-        targetDataSources.putAll(dynamicDataSources);
-        //设置目标数据库
-        dynamicDataSource.setTargetDataSources(targetDataSources);
-        logger.error("注册数据源成功");
-        return dynamicDataSource;
-    }
 
     @Bean
     public SqlSessionFactoryBean sqlSessionFactoryBean() throws Exception{
